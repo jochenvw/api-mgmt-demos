@@ -1,0 +1,2 @@
+az group delete --resource-group api-mgmt-demos-appteam
+az group delete --resource-group api-mgmt-demos-apiteam
