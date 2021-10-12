@@ -88,3 +88,16 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
     clientAffinityEnabled: false    
   }  
 }
+
+resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing = {
+  name: 'api-mgmt-demos-apimgmt'
+}  
+
+resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/nodeAPI'
+  properties: {
+    format: 'openapi-link'
+    value: 'https://api-app-jvw-nodeapi.azurewebsites.net/spec/api.yml'
+    path: 'nodeAPI'
+  }
+}
