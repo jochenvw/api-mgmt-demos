@@ -28,6 +28,11 @@ jobs:
       run: |
         npm install
         npm run compile
+    - name: copy package.json
+      uses: canastro/copy-file-action@master
+      with:
+        source: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/package.json
+        target: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist/package.json
     - name: Azure login
       uses: azure/login@v1
       with:
