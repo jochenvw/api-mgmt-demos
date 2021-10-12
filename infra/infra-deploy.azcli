@@ -1,4 +1,4 @@
-az login
+# az login
 az group create --name api-mgmt-demos-appteam --location westeurope
 az group create --name api-mgmt-demos-apiteam --location westeurope
 
