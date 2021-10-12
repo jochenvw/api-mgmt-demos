@@ -1,3 +1,7 @@
 az login
 az group delete --resource-group api-mgmt-demos-appteam -y
 az group delete --resource-group api-mgmt-demos-apiteam -y
+
+# :( - https://github.com/Azure/azure-cli/issues/16138
+# NOTE: replace [subscriptionid]
+az rest --method delete --header "Accept=applicaiton/json" -u 'https://management.azure.com/subscriptions/[subscriptionid]/providers/Microsoft.ApiManagement/locations/westeurope/deletedservices/api-mgmt-demos-apimgmt?api-version=2020-06-01-preview'
