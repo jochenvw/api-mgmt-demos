@@ -24,15 +24,11 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: npm install, build, and test      
+    - name: npm install, build cp node_modules to /dist folder
       run: |
         npm install
         npm run compile
-    - name: copying node_modules folder to distribution
-      uses: canastro/copy-file-action@master
-      with:
-        source: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/node_modules
-        target: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist/node_modules
+        cp -r node_modules/ dist/
     - name: Azure login
       uses: azure/login@v1
       with:
