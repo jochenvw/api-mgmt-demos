@@ -14,4 +14,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}      
     - name: 'Deploy infrastructure'
-      run: bash -c './infra/infra-deploy.azcli'
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.28.0
+        inlineScript: |
+          chmod +x $GITHUB_WORKSPACE/infra/infra-deploy.sh
+          $GITHUB_WORKSPACE/infra/infra-deploy.sh
