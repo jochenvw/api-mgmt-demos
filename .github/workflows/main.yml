@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: api-app-jvw-nodeapi    
-  AZURE_WEBAPP_PACKAGE_PATH: './apps/nodeAPI'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: './apps/nodeAPI/dist'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'                # set this to the node version to use
 
 jobs:
