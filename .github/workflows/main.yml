@@ -31,8 +31,8 @@ jobs:
     - name: copy package.json
       uses: canastro/copy-file-action@master
       with:
-        source: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/package.json
-        target: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist/package.json
+        source: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/node_modules
+        target: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist/node_modules
     - name: Azure login
       uses: azure/login@v1
       with:
