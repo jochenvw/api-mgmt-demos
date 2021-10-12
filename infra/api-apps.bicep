@@ -53,6 +53,34 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
           name: 'XDT_MicrosoftApplicationInsights_Mode'
           value: 'recommended'
         }
+        {
+          name: 'APP_ID'
+          value: 'nodeAPI'
+        }        
+        {
+          name: 'PORT'
+          value: '8080'
+        }        
+        {
+          name: 'LOG_LEVEL'
+          value: 'debug'
+        }        
+        {
+          name: 'REQUEST_LIMIT'
+          value: '100kb'
+        }        
+        {
+          name: 'SESSION_SECRET'
+          value: 'mySecret'
+        }        
+        {
+          name: 'OPENAPI_SPEC'
+          value: '/api/v1/spec'
+        }        
+        {
+          name: 'OPENAPI_ENABLE_RESPONSE_VALIDATION'
+          value: 'false'
+        }        
       ]
       linuxFxVersion: 'NODE|14-lts'
       alwaysOn: false
