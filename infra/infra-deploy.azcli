@@ -4,3 +4,5 @@ az group create --name api-mgmt-demos-apiteam --location westeurope
 
 az deployment group create --resource-group api-mgmt-demos-appteam --template-file './infra/api-apps.bicep'
 az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-mgmt.bicep'
+
+az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep'
