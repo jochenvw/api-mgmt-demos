@@ -18,5 +18,5 @@ jobs:
       with:
         azcliversion: 2.28.0
         inlineScript: |
-          chmod +x $GITHUB_WORKSPACE/infra/infra-deploy.sh
-          $GITHUB_WORKSPACE/infra/infra-deploy.sh
+          chmod +x $GITHUB_WORKSPACE/infra/infra-deploy.azcli
+          $GITHUB_WORKSPACE/infra/infra-deploy.azcli
