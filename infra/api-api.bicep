@@ -26,8 +26,29 @@ resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = 
       'http'
       'https'
     ]
+  
     displayName: 'graphQLAPI'
     serviceUrl: 'https://api-mgmt-demos-apimgmt-sruinard.azure-api.net/'
-    subscriptionRequired: false
+    subscriptionRequired: false 
   }
+}
+
+resource operations_get 'Microsoft.ApiManagement/service/apis/operations@2019-01-01' = {
+  name: '${graphqlapi.name}/graphqloperations_get'
+  properties: {
+    displayName: 'graphql_get'
+    method: 'GET'
+    urlTemplate: '/*'
+  }
+
+}
+
+resource operations_post 'Microsoft.ApiManagement/service/apis/operations@2019-01-01' = {
+  name: '${graphqlapi.name}/graphqloperations_post'
+  properties: {
+    displayName: 'graphql_post'
+    method: 'POST'
+    urlTemplate: '/*'
+  }
+
 }
