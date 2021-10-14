@@ -15,14 +15,19 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
   }
 }
 
-resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-  name: '${apimgmt.name}/nodeAPI'
+resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/GraphQLAPI'
   properties: {
     apiType: 'http'
-    description: 'Example nodeJS API'
+    description: 'Example GraphQL API'
     isCurrent: true
-    format: 'openapi-link'
-    value: 'https://api-app-sruinard-nodeapi.azurewebsites.net/spec/api.yml'
-    path: 'nodeAPI'
+    path: 'GraphQLAPI'
+    protocols: [
+      'http'
+      'https'
+    ]
+    displayName: 'graphQLAPI'
+    serviceUrl: 'https://api-mgmt-demos-apimgmt-sruinard.azure-api.net/'
+    subscriptionRequired: false
   }
 }
