@@ -11,6 +11,11 @@ env:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    name: Build and Deploy GraphQL API
+    environment: production
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
