@@ -1,5 +1,5 @@
 resource appserviceplan 'Microsoft.Web/serverfarms@2021-01-15' = {
-  name: 'api-mgmt-demos-serviceplan'
+  name: 'api-mgmt-demos-serviceplan-sruinard'
   location: 'westeurope'
   kind: 'linux'
   properties: {
@@ -27,7 +27,7 @@ resource appinsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 resource app 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'api-app-jvw-nodeapi'
+  name: 'api-app-sruinard-nodeapi'
   location: 'westeurope'
   identity: {
     type: 'SystemAssigned'
