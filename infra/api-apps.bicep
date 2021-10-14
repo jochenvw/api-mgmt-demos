@@ -88,3 +88,50 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
     clientAffinityEnabled: false    
   }  
 }
+
+resource graphqlapp 'Microsoft.Web/sites@2021-02-01' = {
+  name: 'api-app-sruinard-graphql'
+  location: 'westeurope'
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    serverFarmId: appserviceplan.id
+    httpsOnly: true    
+    siteConfig: {
+      cors: {
+        allowedOrigins: [
+          '*'
+        ]
+        supportCredentials: false
+      }
+      appSettings: [
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appinsights.properties.InstrumentationKey
+        }
+        {
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+          value: appinsights.properties.ConnectionString
+        }
+        {
+          name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
+          value: '~3'
+        }
+        {
+          name: 'XDT_MicrosoftApplicationInsights_Mode'
+          value: 'recommended'
+        }
+        {
+          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
+          value: '1'
+        }        
+      ]
+      
+      appCommandLine: './startup.sh'
+      linuxFxVersion: 'python|3.7'
+      alwaysOn: false
+    }
+    clientAffinityEnabled: false    
+  }  
+}
