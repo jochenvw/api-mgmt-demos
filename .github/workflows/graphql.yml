@@ -10,7 +10,6 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: './apps/AzFastApiGraphQL'      # set this to the path to your web app project, defaults to the repository root
 
 jobs:
-jobs:
   build:
     runs-on: ubuntu-latest
     steps:
