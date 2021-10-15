@@ -131,7 +131,10 @@ resource graphqlapp 'Microsoft.Web/sites@2021-02-01' = {
       appCommandLine: './startup.sh'
       linuxFxVersion: 'python|3.7'
       alwaysOn: false
+      
     }
     clientAffinityEnabled: false    
   }  
 }
+
+
