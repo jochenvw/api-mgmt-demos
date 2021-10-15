@@ -58,9 +58,10 @@ class CreditCardRepoSQLImpl(CreditRepoInterface):
         return cards
 
     def add(self, card: CreditCardObject):
-        creditcard = models.CreditCard(**card.dict())
+        creditcard = models.CreditCard(budget=card.budget)
         self.session.add(creditcard)
         self.session.commit()
+        creditcard = CreditCardObject(card_id=creditcard.card_id, budget=creditcard.budget)
         return creditcard
 
     def update_all(self, items: List[models.CreditCard]):
