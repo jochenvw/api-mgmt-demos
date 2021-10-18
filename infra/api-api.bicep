@@ -5,7 +5,7 @@ var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-
 param uniqueness string = 'z9pqqf'
 
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing = {
-  name: 'api-mgmt-team-apimgmt-${uniqueness}'
+  name: 'api-mgmt-team-apim-${uniqueness}'
 }  
 
 resource appinsights 'Microsoft.Insights/components@2020-02-02' existing = {
@@ -25,18 +25,47 @@ resource apilogger 'Microsoft.ApiManagement/service/loggers@2021-01-01-preview' 
   }
 }
 
-resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-  name: '${apimgmt.name}/nodeAPI'
+resource apiversions 'Microsoft.ApiManagement/service/apiVersionSets@2021-04-01-preview' = {
+  name: '${apimgmt.name}/versions'
   properties: {
+    displayName: 'NodeAPI EXAMPLES API'
+    versioningScheme: 'Segment'
+  }
+}
+
+resource api1 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/nodeAPI-v1'
+  properties: {
+    apiVersionDescription: 'V1'
+    apiVersion: 'V1'
+    displayName: 'Node API V1'
     apiType: 'http'
     description: 'Example nodeJS API'
     isCurrent: true
     format: 'openapi-link'
-    value: 'https://api-app-nodeapi-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
-    path: 'nodeAPI'
-
+    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
+    path: 'nodeAPI/v1'
+    apiVersionSetId: apiversions.id
   }
 }
+
+resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/nodeAPI-v2'
+  properties: {
+    apiVersionDescription: 'V2'
+    apiVersion: 'V2'
+    displayName: 'Node API V2'
+    apiType: 'http'
+    description: 'Example nodeJS API'
+    isCurrent: true
+    format: 'openapi-link'
+    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v2.yml'
+    path: 'nodeAPI/v2'
+    apiVersionSetId: apiversions.id
+  }
+}
+
+
 
 resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
   name: '${apimgmt.name}/GraphQLAPI'
@@ -83,7 +112,7 @@ resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
   }
 }
 resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
-  name: '${api.name}/diagsetting'
+  name: '${api1.name}/diagsetting'
   properties: {
     loggerId: apilogger.id
   }
