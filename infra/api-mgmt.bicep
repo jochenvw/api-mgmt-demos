@@ -2,8 +2,8 @@ resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' = {
   name: 'api-mgmt-demos-apimgmt-sruinard'
   location: 'westeurope'
   sku: {
-    name: 'Premium'
-    capacity: 1
+    name: 'Consumption'
+    capacity: 0
   }
   properties: {
     publisherEmail: 'stefruinard@microsoft.com'
