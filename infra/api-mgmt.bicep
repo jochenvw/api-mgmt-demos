@@ -10,7 +10,6 @@ resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' = {
   properties: {
     publisherEmail: 'johndoe@microsoft.com'
     publisherName: 'John Doe'
-    restore: true
   }
 }
 

@@ -1,8 +1,10 @@
 // multiline string doesnt support interpolation
-var graphql_api_name = 'api-app-sruinard-graphql'
-var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-generated-policy" backend-id="WebApp_${graphql_api_name}" /> <base /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies> '
-
 param uniqueness string = 'z9pqqf'
+
+var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-generated-policy" backend-id="WebApp_api-app-api-python-graph-${uniqueness}" /> <base /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies> '
+
+
+
 
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing = {
   name: 'api-mgmt-team-apim-${uniqueness}'
@@ -33,37 +35,37 @@ resource apiversions 'Microsoft.ApiManagement/service/apiVersionSets@2021-04-01-
   }
 }
 
-resource api1 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-  name: '${apimgmt.name}/nodeAPI-v1'
-  properties: {
-    apiVersionDescription: 'V1'
-    apiVersion: 'V1'
-    displayName: 'Node API V1'
-    apiType: 'http'
-    description: 'Example nodeJS API'
-    isCurrent: true
-    format: 'openapi-link'
-    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
-    path: 'nodeAPI/v1'
-    apiVersionSetId: apiversions.id
-  }
-}
+// resource api1 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+//   name: '${apimgmt.name}/nodeAPI-v1'
+//   properties: {
+//     apiVersionDescription: 'V1'
+//     apiVersion: 'V1'
+//     displayName: 'Node API V1'
+//     apiType: 'http'
+//     description: 'Example nodeJS API'
+//     isCurrent: true
+//     format: 'openapi-link'
+//     value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
+//     path: 'nodeAPI/v1'
+//     apiVersionSetId: apiversions.id
+//   }
+// }
 
-resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-  name: '${apimgmt.name}/nodeAPI-v2'
-  properties: {
-    apiVersionDescription: 'V2'
-    apiVersion: 'V2'
-    displayName: 'Node API V2'
-    apiType: 'http'
-    description: 'Example nodeJS API'
-    isCurrent: true
-    format: 'openapi-link'
-    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v2.yml'
-    path: 'nodeAPI/v2'
-    apiVersionSetId: apiversions.id
-  }
-}
+// resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+//   name: '${apimgmt.name}/nodeAPI-v2'
+//   properties: {
+//     apiVersionDescription: 'V2'
+//     apiVersion: 'V2'
+//     displayName: 'Node API V2'
+//     apiType: 'http'
+//     description: 'Example nodeJS API'
+//     isCurrent: true
+//     format: 'openapi-link'
+//     value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v2.yml'
+//     path: 'nodeAPI/v2'
+//     apiVersionSetId: apiversions.id
+//   }
+// }
 
 
 
@@ -78,10 +80,11 @@ resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = 
       'https'
     ]
     displayName: 'graphQLAPI'
-    serviceUrl: 'https://api-mgmt-demos-apimgmt-${appsuffix}.azure-api.net/'
+    serviceUrl: apimgmt.properties.gatewayUrl
     subscriptionRequired: false 
   }
 }
+
 
 resource operations_get 'Microsoft.ApiManagement/service/apis/operations@2019-01-01' = {
   name: '${graphqlapi.name}/graphqloperations_get'
@@ -111,9 +114,10 @@ resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
     value: backend_policy_value
   }
 }
-resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
-  name: '${api1.name}/diagsetting'
-  properties: {
-    loggerId: apilogger.id
-  }
-}
+
+// resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
+//   name: '${api1.name}/diagsetting'
+//   properties: {
+//     loggerId: apilogger.id
+//   }
+// }
