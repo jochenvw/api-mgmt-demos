@@ -1,8 +1,16 @@
+# Deploys infrastructure for API Management demos
+
+# Only required locally or in GitHub spaces - once. GitHub actions log in using service principal authentication
+# so therefore commented out
 # az login
+
+# Create resource groups for 'API team' and 'App team' + deploy respective resources
 az group create --name api-mgmt-demos-appteam --location westeurope
 az group create --name api-mgmt-demos-apiteam --location westeurope
 
 az deployment group create --resource-group api-mgmt-demos-appteam --template-file './infra/api-apps.bicep'
 az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-mgmt.bicep'
 
+# This deploys the API from the 'App team' into the resource group of the 'API team' - so differs
+# a bit in the sense that a team typically deploys resources in their own resource groups.
 az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep'
