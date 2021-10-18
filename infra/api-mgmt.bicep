@@ -1,7 +1,7 @@
 param uniqueness string = 'z9pqqf'
 
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' = {
-  name: 'api-mgmt-team-apimgmt-${uniqueness}'
+  name: 'api-mgmt-team-apim-${uniqueness}'
   location: 'westeurope'
   sku: {
     name: 'Consumption'
