@@ -1,6 +1,6 @@
-import ExamplesService from '../../services/examples.service';
+import ExamplesService from '../../../services/examples.service';
 
-export class Controller {
+export class ControllerV1 {
   all(req, res) {
     ExamplesService.all().then((r) => res.json(r));
   }
@@ -18,4 +18,4 @@ export class Controller {
     );
   }
 }
-export default new Controller();
+export default new ControllerV1();

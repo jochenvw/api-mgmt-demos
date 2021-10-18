@@ -14,7 +14,7 @@ export default class ExpressServer {
   constructor() {
     const root = path.normalize(`${__dirname}/../..`);
 
-    const apiSpec = path.join(__dirname, 'api.yml');
+    const apiSpec = path.join(__dirname, 'api-v1.yml');
     const validateResponses = !!(
       process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION &&
       process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION.toLowerCase() === 'true'

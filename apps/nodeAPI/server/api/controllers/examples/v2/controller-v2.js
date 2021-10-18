@@ -1,0 +1,22 @@
+import ExamplesService from '../../../services/examples.service';
+
+export class ControllerV2 {
+  all(req, res) {
+    var result =  [{'name':'john', 'lastname':'doe'},{'api':'v2'}];
+    res.json(result);
+  }
+
+  byId(req, res) {
+    ExamplesService.byId(req.params.id).then((r) => {
+      if (r) res.json(r);
+      else res.status(404).end();
+    });
+  }
+
+  create(req, res) {
+    ExamplesService.create(req.body.name).then((r) =>
+      res.status(201).location(`/api/v2/examples/${r.id}`).json(r)
+    );
+  }
+}
+export default new ControllerV2();
