@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: api-app-jvw-nodeapi    
+  AZURE_WEBAPP_NAME: api-app-sruinard-nodeapi    
   AZURE_WEBAPP_PACKAGE_PATH: './apps/nodeAPI'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'                # set this to the node version to use
 
@@ -37,5 +37,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist      
