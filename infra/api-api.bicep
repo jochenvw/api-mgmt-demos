@@ -35,37 +35,37 @@ resource apiversions 'Microsoft.ApiManagement/service/apiVersionSets@2021-04-01-
   }
 }
 
-// resource api1 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-//   name: '${apimgmt.name}/nodeAPI-v1'
-//   properties: {
-//     apiVersionDescription: 'V1'
-//     apiVersion: 'V1'
-//     displayName: 'Node API V1'
-//     apiType: 'http'
-//     description: 'Example nodeJS API'
-//     isCurrent: true
-//     format: 'openapi-link'
-//     value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
-//     path: 'nodeAPI/v1'
-//     apiVersionSetId: apiversions.id
-//   }
-// }
+resource api1 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/nodeAPI-v1'
+  properties: {
+    apiVersionDescription: 'V1'
+    apiVersion: 'V1'
+    displayName: 'Node API V1'
+    apiType: 'http'
+    description: 'Example nodeJS API'
+    isCurrent: true
+    format: 'openapi-link'
+    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
+    path: 'nodeAPI/v1'
+    apiVersionSetId: apiversions.id
+  }
+}
 
-// resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
-//   name: '${apimgmt.name}/nodeAPI-v2'
-//   properties: {
-//     apiVersionDescription: 'V2'
-//     apiVersion: 'V2'
-//     displayName: 'Node API V2'
-//     apiType: 'http'
-//     description: 'Example nodeJS API'
-//     isCurrent: true
-//     format: 'openapi-link'
-//     value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v2.yml'
-//     path: 'nodeAPI/v2'
-//     apiVersionSetId: apiversions.id
-//   }
-// }
+resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/nodeAPI-v2'
+  properties: {
+    apiVersionDescription: 'V2'
+    apiVersion: 'V2'
+    displayName: 'Node API V2'
+    apiType: 'http'
+    description: 'Example nodeJS API'
+    isCurrent: true
+    format: 'openapi-link'
+    value: 'https://api-app-api-node-REST-${uniqueness}.azurewebsites.net/spec/api-v2.yml'
+    path: 'nodeAPI/v2'
+    apiVersionSetId: apiversions.id
+  }
+}
 
 
 
@@ -115,9 +115,9 @@ resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
   }
 }
 
-// resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
-//   name: '${api1.name}/diagsetting'
-//   properties: {
-//     loggerId: apilogger.id
-//   }
-// }
+resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
+  name: '${api1.name}/diagsetting'
+  properties: {
+    loggerId: apilogger.id
+  }
+}
