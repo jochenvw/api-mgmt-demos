@@ -2,17 +2,19 @@
 var graphql_api_name = 'api-app-sruinard-graphql'
 var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-generated-policy" backend-id="WebApp_${graphql_api_name}" /> <base /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies> '
 
+param uniqueness string = 'z9pqqf'
+
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing = {
-  name: 'api-mgmt-demos-apimgmt-sruinard'
+  name: 'api-mgmt-team-apimgmt-${uniqueness}'
 }  
 
 resource appinsights 'Microsoft.Insights/components@2020-02-02' existing = {
-  name: 'api-mgmt-demos-app-insights'
+  name: 'api-app-insights-${uniqueness}'
   scope: resourceGroup('api-mgmt-demos-appteam')
 }
 
 resource apilogger 'Microsoft.ApiManagement/service/loggers@2021-01-01-preview' = {  
-  name: '${apimgmt.name}/apiinsights'
+  name: '${apimgmt.name}/api-app-insights-${uniqueness}'
   properties: {
     loggerType: 'applicationInsights'
     credentials: {
@@ -30,7 +32,7 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
     description: 'Example nodeJS API'
     isCurrent: true
     format: 'openapi-link'
-    value: 'https://api-app-sruinard-nodeapi.azurewebsites.net/spec/api.yml'
+    value: 'https://api-app-nodeapi-${uniqueness}.azurewebsites.net/spec/api-v1.yml'
     path: 'nodeAPI'
 
   }
@@ -47,7 +49,7 @@ resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = 
       'https'
     ]
     displayName: 'graphQLAPI'
-    serviceUrl: 'https://api-mgmt-demos-apimgmt-sruinard.azure-api.net/'
+    serviceUrl: 'https://api-mgmt-demos-apimgmt-${appsuffix}.azure-api.net/'
     subscriptionRequired: false 
   }
 }
@@ -61,7 +63,6 @@ resource operations_get 'Microsoft.ApiManagement/service/apis/operations@2019-01
     templateParameters: []
     responses: []
   }
-
 }
 
 resource operations_post 'Microsoft.ApiManagement/service/apis/operations@2019-01-01' = {
@@ -73,9 +74,7 @@ resource operations_post 'Microsoft.ApiManagement/service/apis/operations@2019-0
     responses: []
     templateParameters: []
   }
-
 }
-
 
 resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-01-preview' = {
   name: '${graphqlapi.name}/policy'
@@ -89,4 +88,3 @@ resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@202
     loggerId: apilogger.id
   }
 }
-

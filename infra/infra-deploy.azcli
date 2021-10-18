@@ -8,9 +8,10 @@
 az group create --name api-mgmt-demos-appteam --location westeurope
 az group create --name api-mgmt-demos-apiteam --location westeurope
 
-az deployment group create --resource-group api-mgmt-demos-appteam --template-file './infra/api-apps.bicep'
-az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-mgmt.bicep'
+# CHECK: 'uniqueness' - make this unique for your local
+az deployment group create --resource-group api-mgmt-demos-appteam --template-file './infra/api-apps.bicep' --parameters uniqueness=jvw-demo --mode Complete
+az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-mgmt.bicep' --parameters uniqueness=jvw-demo --mode Complete
 
 # This deploys the API from the 'App team' into the resource group of the 'API team' - so differs
 # a bit in the sense that a team typically deploys resources in their own resource groups.
-az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep'
+az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep' --parameters uniqueness=jvw-demo 

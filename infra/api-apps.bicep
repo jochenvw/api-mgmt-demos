@@ -1,5 +1,7 @@
+param uniqueness string = 'z9pqqf'
+
 resource appserviceplan 'Microsoft.Web/serverfarms@2021-01-15' = {
-  name: 'api-mgmt-demos-serviceplan-sruinard'
+  name: 'api-app-asp-${uniqueness}'
   location: 'westeurope'
   kind: 'linux'
   properties: {
@@ -12,12 +14,12 @@ resource appserviceplan 'Microsoft.Web/serverfarms@2021-01-15' = {
 }
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
-  name: 'api-mgmt-demos-app-logs'
+  name: 'api-app-logs-${uniqueness}'
   location: 'westeurope'
 }
 
 resource appinsights 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'api-mgmt-demos-app-insights'
+  name: 'api-app-insights-${uniqueness}'
   location: 'westeurope'
   kind: 'web'  
   properties: {
@@ -27,7 +29,7 @@ resource appinsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 resource app 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'api-app-sruinard-nodeapi'
+  name: 'api-app-api-node-REST-${uniqueness}'
   location: 'westeurope'
   identity: {
     type: 'SystemAssigned'
@@ -90,7 +92,7 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
 }
 
 resource graphqlapp 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'api-app-sruinard-graphql'
+  name: 'api-app-api-python-graph-${uniqueness}'
   location: 'westeurope'
   identity: {
     type: 'SystemAssigned'
@@ -136,5 +138,3 @@ resource graphqlapp 'Microsoft.Web/sites@2021-02-01' = {
     clientAffinityEnabled: false    
   }  
 }
-
-
