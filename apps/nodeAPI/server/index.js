@@ -17,5 +17,6 @@ appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
 
 
 let client = appInsights.defaultClient;
-client.trackEvent({name: "Server started !"}});
+client.trackEvent({name: "Server started !"});
+
 export default new Server().router(routes).listen(process.env.PORT);
