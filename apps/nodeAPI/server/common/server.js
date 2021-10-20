@@ -9,6 +9,7 @@ import * as OpenApiValidator from 'express-openapi-validator';
 import errorHandler from '../api/middlewares/error.handler';
 
 const app = new Express();
+var ai = require('express-ai').loggers(app, process.env.APPINSIGHTS_INSTRUMENTATIONKEY, true);
 
 export default class ExpressServer {
   constructor() {
@@ -19,6 +20,9 @@ export default class ExpressServer {
       process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION &&
       process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION.toLowerCase() === 'true'
     );
+
+    app.use(ai.logRequest);
+    app.use(ai.logErrors);
 
     app.use(bodyParser.json({ limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(
