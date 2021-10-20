@@ -15,4 +15,7 @@ appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
     .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
     .start();
 
+
+let client = appInsights.defaultClient;
+client.trackEvent({name: "Server started !"}});
 export default new Server().router(routes).listen(process.env.PORT);
