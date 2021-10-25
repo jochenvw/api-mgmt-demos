@@ -13,8 +13,8 @@ env:
   AZURE_PYTHON_WEBAPP_NAME: api-app-api-python-graph-sruinard    
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH: './apps/pythonAPI'
   
-  AZURE_PYTHON_WEBAPP_NAME: api-app-api-python-sruinard    
-  AZURE_PYTHON_WEBAPP_PACKAGE_PATH: './apps/pythonAPIREST'
+  AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-sruinard    
+  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST'
 jobs:
   build-and-deploy:
     defaults:
@@ -70,10 +70,10 @@ jobs:
       with:
         app-name: ${{ env.AZURE_PYTHON_WEBAPP_NAME }}
         package: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH }}
-  build restapi:
+  build_restapi:
     defaults:
       run:
-        working-directory: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_NAME }}
+        working-directory: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
     name: Build and Deploy PYTHON REST API
     environment: production
     runs-on: ubuntu-latest
