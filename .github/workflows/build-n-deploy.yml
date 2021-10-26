@@ -15,7 +15,7 @@ env:
   
   AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-sruinard    
   AZURE_PYTHON_WEBAPP_ROOT: './apps/pythonAPIREST/'
-  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST/dist/*.zip'
+  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST/dist/'
 jobs:
   build-and-deploy:
     defaults:
