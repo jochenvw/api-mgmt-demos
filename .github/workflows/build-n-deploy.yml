@@ -14,7 +14,7 @@ env:
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH: './apps/pythonAPI'
   
   AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-sruinard    
-  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST'
+  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST/dist/*.zip'
 jobs:
   build-and-deploy:
     defaults:
@@ -91,11 +91,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install wheel
-        python setup.py bdist_wheel
-        pip install dist/*
+        pip install setuptools
+        python setup.py bdist --format=zip
     - name: Deploy web App using GH Action azure/webapps-deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_PYTHON_WEBAPP_NAME_REST }}
         package: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+        startup-command: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker users.app:app"
