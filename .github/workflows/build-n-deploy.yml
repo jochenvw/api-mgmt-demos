@@ -14,6 +14,7 @@ env:
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH: './apps/pythonAPI'
   
   AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-sruinard    
+  AZURE_PYTHON_WEBAPP_ROOT: './apps/pythonAPIREST/'
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST/dist/*.zip'
 jobs:
   build-and-deploy:
@@ -73,7 +74,7 @@ jobs:
   build_restapi:
     defaults:
       run:
-        working-directory: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+        working-directory: ${{ env.AZURE_PYTHON_WEBAPP_ROOT }}
     name: Build and Deploy PYTHON REST API
     environment: production
     runs-on: ubuntu-latest
