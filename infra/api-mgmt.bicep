@@ -5,7 +5,7 @@ resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' = {
   location: 'westeurope'
   sku: {
     name: 'Developer'
-    capacity: 3
+    capacity: 1
   }
   properties: {
     publisherEmail: 'johndoe@microsoft.com'
