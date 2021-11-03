@@ -41,7 +41,7 @@ resource webshop 'Microsoft.Web/sites@2021-02-01' = {
         }
         {
           name: 'APIM_ENDPOINT'
-          value: apimgmt.properties.managementApiUrl
+          value: '${apimgmt.properties.managementApiUrl}/payments/'
         }
         {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
@@ -88,7 +88,7 @@ resource payments 'Microsoft.Web/sites@2021-02-01' = {
         }
         {
           name: 'SHIPPING_ENDPOINT'
-          value: shipping.properties.defaultHostName
+          value: 'https://${shipping.properties.defaultHostName}'
         }
         {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
