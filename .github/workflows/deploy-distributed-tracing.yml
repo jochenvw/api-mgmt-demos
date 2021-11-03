@@ -1,0 +1,182 @@
+name: Build and Deploy API
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+
+env:
+  AZURE_PYTHON_WEBAPP_WEBSHOP: api-app-api-python-sruinard-webshop  
+  AZURE_PYTHON_WEBAPP_PAYMENTS: api-app-api-python-sruinard-payments
+  AZURE_PYTHON_WEBAPP_SHIPPING: api-app-api-python-sruinard-shipping 
+
+  WEBSHOP_ROOT: './apps/distributed_tracing/webshop'
+  PAYMENTS_ROOT: './apps/distributed_tracing/payments'
+  SHIPPING_ROOT: './apps/distributed_tracing/shipping'
+  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './dist/'
+jobs:
+  build_webshop:
+    defaults:
+      run:
+        working-directory: ${{ env.WEBSHOP_ROOT }}
+    name: build_and_deploy webshop
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install wheel
+        python setup.py bdist_wheel 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: webshop
+        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+  
+  deploy_webshop:
+    name: Deploy webshop
+    needs: [build_webshop] 
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: webshop
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Deploy web App using GH Action azure/webapps-deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{env.AZURE_PYTHON_WEBAPP_WEBSHOP }}
+        package: ${{ env.WEBSHOP_ROOT }}
+        startup-command: "pip install *.whl && python -m uvicorn webshop.app:app --host 0.0.0.0"
+
+  build_payments:
+    defaults:
+      run:
+        working-directory: ${{ env.PAYMENTS_ROOT }}
+    name: build_and_deploy payments
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install wheel
+        python setup.py bdist_wheel 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: payments
+        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+  
+  deploy_payments:
+    name: Deploy payments
+    needs: [build_payments] 
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: payments
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Deploy web App using GH Action azure/webapps-deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{env.AZURE_PYTHON_WEBAPP_PAYMENTS }}
+        package: ${{ env.PAYMENTS_ROOT }}
+        startup-command: "pip install *.whl && python -m uvicorn payments.app:app --host 0.0.0.0"
+
+  build_shipping:
+    defaults:
+      run:
+        working-directory: ${{ env.SHIPPING_ROOT }}
+    name: build_and_deploy shipping
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install wheel
+        python setup.py bdist_wheel 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: shipping
+        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+  
+  deploy_shipping:
+    name: Deploy shipping
+    needs: [build_shipping] 
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: shipping
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Deploy web App using GH Action azure/webapps-deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{env.AZURE_PYTHON_WEBAPP_SHIPPING }}
+        package: ${{ env.SHIPPING_ROOT }}
+        startup-command: "pip install *.whl && python -m uvicorn shipping.app:app --host 0.0.0.0"
