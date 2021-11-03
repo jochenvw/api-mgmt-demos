@@ -14,7 +14,10 @@ env:
   WEBSHOP_ROOT: './apps/distributed_tracing/webshop'
   PAYMENTS_ROOT: './apps/distributed_tracing/payments'
   SHIPPING_ROOT: './apps/distributed_tracing/shipping'
-  AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './dist/'
+
+  WEBSHOP_PACKAGE: './apps/distributed_tracing/webshop/dist/'
+  PAYMENTS_PACKAGE: './apps/distributed_tracing/payments/dist/'
+  SHIPPING_PACKAGE: './apps/distributed_tracing/shipping/dist/'
 jobs:
   build_webshop:
     defaults:
@@ -42,7 +45,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: webshop
-        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+        path: ${{ env.WEBSHOP_PACKAGE }}
   
   deploy_webshop:
     name: Deploy webshop
@@ -97,7 +100,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: payments
-        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+        path: ${{ env.PAYMENTS_PACKAGE }}
   
   deploy_payments:
     name: Deploy payments
@@ -152,7 +155,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: shipping
-        path: ${{ env.AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST }}
+        path: ${{ env.SHIPPING_PACKAGE }}
   
   deploy_shipping:
     name: Deploy shipping
