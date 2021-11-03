@@ -63,6 +63,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: webshop
+        path: ${{ env.WEBSHOP_ROOT }}
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
       with:
@@ -71,7 +72,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{env.AZURE_PYTHON_WEBAPP_WEBSHOP }}
-        package: ${{ env.WEBSHOP_ROOT }}
+        package:  ${{ env.WEBSHOP_ROOT }}
         startup-command: "pip install *.whl && python -m uvicorn webshop.app:app --host 0.0.0.0"
 
   build_payments:
@@ -118,6 +119,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: payments
+        path: ${{ env.PAYMENTS_ROOT }}
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
       with:
@@ -173,6 +175,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: shipping
+        path: ${{ env.SHIPPING_ROOT }}
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
       with:
