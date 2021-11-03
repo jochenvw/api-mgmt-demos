@@ -7,6 +7,7 @@ resource appserviceplan 'Microsoft.Web/serverfarms@2021-01-15' existing =  {
 
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing =  {
   name: 'api-mgmt-team-apim-${uniqueness}'
+  scope: resourceGroup('api-mgmt-demos-apiteam')
 }
 
 resource appinsights 'Microsoft.Insights/components@2020-02-02' existing = {
@@ -164,7 +165,7 @@ resource shipping 'Microsoft.Web/sites@2021-02-01' = {
 // ####################
 
 resource cosmos_account 'Microsoft.DocumentDB/databaseAccounts@2021-07-01-preview' = {
-  name: 'we-cosmos-webshop'
+  name: 'we-cosmos-distributed-tracing'
   location: location
   properties: {
     createMode: 'Default'

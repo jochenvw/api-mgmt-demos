@@ -115,9 +115,9 @@ resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
   }
 }
 
-resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
-  name: '${api1.name}/diagsetting'
-  properties: {
-    loggerId: apilogger.id
-  }
-}
+// resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
+//   name: '${api1.name}/diagsetting'
+//   properties: {
+//     loggerId: apilogger.id
+//   }
+// }
