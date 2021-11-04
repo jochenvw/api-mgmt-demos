@@ -40,8 +40,8 @@ resource webshop 'Microsoft.Web/sites@2021-02-01' = {
           value: appinsights.properties.ConnectionString
         }
         {
-          name: 'APIM_ENDPOINT'
-          value: '${apimgmt.properties.gatewayUrl}/payments/'
+          name: 'PAYMENTS_ENDPOINT'
+          value: 'https://${payments.properties.defaultHostName}/'
         }
         {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'

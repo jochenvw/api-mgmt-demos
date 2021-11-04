@@ -62,17 +62,14 @@ def post_form(request: Request):
 
 
 @app.post("/orders")
-def post_form(request: Request, price: int = Form(...), item_id: int = Form(...), quantity: int = Form(...)):
+def post_form(price: int = Form(...), item_id: int = Form(...), quantity: int = Form(...)):
     order = {
         'item_id': item_id,
         'price': price,
         'quantity': quantity
     }
-    print(Config.APIM_ENDPOINT + "payments")
-    response = requests.post(Config.APIM_ENDPOINT +
+    response = requests.post(Config.PAYMENTS_ENDPOINT +
                              "payments", data=json.dumps(order)).json()
-    print(response)
-    # templates.TemplateResponse('form.html', context={'request': request, 'price': price, 'item_id': response.get('item_id'), 'quantity': quantity})
     return order
 
 

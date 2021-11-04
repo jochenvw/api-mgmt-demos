@@ -60,9 +60,9 @@ async def get():
 async def create_order(order: Order):
     order_to_place = order.json()
     print(order_to_place)
-    print(Config.shipping_endpoint + "orders")
+    print(Config.shipping_endpoint + "shipments")
     placed_order = requests.post(
-        Config.shipping_endpoint + "orders", data=order_to_place).json()
+        Config.shipping_endpoint + "shipments", data=order_to_place).json()
     return placed_order
 
 

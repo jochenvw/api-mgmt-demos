@@ -56,14 +56,14 @@ async def get():
     return "Distributed tracing"
 
 
-@app.get("/orders")
+@app.get("/shipments")
 async def create_order():
     order_repo = repo.CosmosRepo()
     orders = order_repo.get_all()
     return orders
 
 
-@app.post("/orders")
+@app.post("/shipments")
 async def create_order(order: Order):
     order_repo = repo.CosmosRepo()
     placed_order = order_repo.add(order)

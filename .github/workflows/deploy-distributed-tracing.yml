@@ -19,6 +19,7 @@ env:
   PAYMENTS_PACKAGE: './apps/distributed_tracing/payments/dist/'
   SHIPPING_PACKAGE: './apps/distributed_tracing/shipping/dist/'
 jobs:
+  
   build_webshop:
     defaults:
       run:
@@ -32,6 +33,13 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+            az storage blob upload-batch --account-name blobtracingsruinard --auth-mode key -d '$web' -s ./templates
 
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
