@@ -68,10 +68,12 @@ def post_form(request: Request, price: int = Form(...), item_id: int = Form(...)
         'price': price,
         'quantity': quantity
     }
+    print(Config.APIM_ENDPOINT + "payments")
     response = requests.post(Config.APIM_ENDPOINT +
                              "payments", data=json.dumps(order)).json()
-
-    return templates.TemplateResponse('form.html', context={'request': request, 'price': price, 'item_id': response.get('item_id'), 'quantity': quantity})
+    print(response)
+    # templates.TemplateResponse('form.html', context={'request': request, 'price': price, 'item_id': response.get('item_id'), 'quantity': quantity})
+    return order
 
 
 if __name__ == "__main__":

@@ -59,6 +59,8 @@ async def get():
 @app.post("/payments")
 async def create_order(order: Order):
     order_to_place = order.json()
+    print(order_to_place)
+    print(Config.shipping_endpoint + "orders")
     placed_order = requests.post(
         Config.shipping_endpoint + "orders", data=order_to_place).json()
     return placed_order

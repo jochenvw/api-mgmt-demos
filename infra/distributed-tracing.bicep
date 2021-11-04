@@ -41,7 +41,7 @@ resource webshop 'Microsoft.Web/sites@2021-02-01' = {
         }
         {
           name: 'APIM_ENDPOINT'
-          value: '${apimgmt.properties.managementApiUrl}/payments/'
+          value: '${apimgmt.properties.gatewayUrl}/payments/'
         }
         {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
@@ -88,7 +88,7 @@ resource payments 'Microsoft.Web/sites@2021-02-01' = {
         }
         {
           name: 'SHIPPING_ENDPOINT'
-          value: 'https://${shipping.properties.defaultHostName}'
+          value: 'https://${shipping.properties.defaultHostName}/'
         }
         {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
@@ -207,5 +207,61 @@ resource cosmosdb_container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
         version: 1
       }
     }
+  }
+}
+
+var identityName = 'distracingblob'
+var roleDefinitionId = resourceId('microsoft.authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+var roleAssignmentName = guid(mi.name, roleDefinitionId, resourceGroup().id)
+
+resource mi 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+  name: identityName
+  location: location
+}
+
+resource miRoleAssign 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: roleAssignmentName
+  properties: {
+    roleDefinitionId: roleDefinitionId
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+
+
+resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: 'blobtracing${uniqueness}'
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  dependsOn: [
+    miRoleAssign
+  ]
+  kind: 'StorageV2'
+}
+
+var ScriptToExecute = 'az storage blob service-properties update --account-name ${stg.name} --static-website --404-document "404.html" --index-document "form.html"'
+resource dScriptWp 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+  name: '${stg.name}-enable-static-webapp'
+  location: location
+  kind: 'AzureCLI'
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${mi.id}': {}
+    }
+  }
+  properties: {
+    azCliVersion: '2.28.0'
+    storageAccountSettings: {
+      storageAccountName: stg.name
+      storageAccountKey: stg.listKeys().keys[0].value
+    }
+    scriptContent: ScriptToExecute
+    cleanupPreference: 'OnSuccess'
+    retentionInterval: 'P1D'
+    timeout: 'PT5M'
   }
 }
