@@ -15,6 +15,18 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from webshop.config import Config
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
+import random
+import time
+
+
+def raise_error_or_delay():
+    probs = random.random()
+    if probs < 0.1:
+        raise Exception("Webshop Error")
+    elif probs < 0.2:
+        sleep_seconds = random.randint(0, 3)
+        time.sleep(sleep_seconds)
+
 
 templates = Jinja2Templates(directory="templates/")
 load_dotenv()
@@ -61,8 +73,15 @@ def post_form(request: Request):
     return templates.TemplateResponse('form.html', context={'request': request})
 
 
+@app.get("/shipments")
+def get_shipments():
+    response = requests.get(Config.SHIPMENTS_ENDPOINT + "shipments")
+    return response.json()
+
+
 @app.post("/orders")
 def post_form(price: int = Form(...), item_id: int = Form(...), quantity: int = Form(...)):
+    raise_error_or_delay()
     order = {
         'item_id': item_id,
         'price': price,
@@ -70,7 +89,7 @@ def post_form(price: int = Form(...), item_id: int = Form(...), quantity: int = 
     }
     response = requests.post(Config.PAYMENTS_ENDPOINT +
                              "payments", data=json.dumps(order)).json()
-    return order
+    return response
 
 
 if __name__ == "__main__":

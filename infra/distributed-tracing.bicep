@@ -44,6 +44,10 @@ resource webshop 'Microsoft.Web/sites@2021-02-01' = {
           value: 'https://${payments.properties.defaultHostName}/'
         }
         {
+          name: 'SHIPMENTS_ENDPOINT'
+          value: 'https://${shipping.properties.defaultHostName}/'
+        }
+        {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
           value: '~3'
         }

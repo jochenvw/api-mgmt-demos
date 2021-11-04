@@ -16,6 +16,19 @@ import shipping.repo as repo
 from shipping.models import Order
 from shipping.config import Config
 
+import random
+import time
+
+
+def raise_error_or_delay():
+    probs = random.random()
+    if probs < 0.1:
+        raise Exception("Webshop Error")
+    elif probs < 0.2:
+        sleep_seconds = random.randint(0, 3)
+        time.sleep(sleep_seconds)
+
+
 load_dotenv()
 
 app = FastAPI()
@@ -58,6 +71,7 @@ async def get():
 
 @app.get("/shipments")
 async def create_order():
+    raise_error_or_delay()
     order_repo = repo.CosmosRepo()
     orders = order_repo.get_all()
     return orders
@@ -65,6 +79,7 @@ async def create_order():
 
 @app.post("/shipments")
 async def create_order(order: Order):
+    raise_error_or_delay()
     order_repo = repo.CosmosRepo()
     placed_order = order_repo.add(order)
     return placed_order

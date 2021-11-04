@@ -16,6 +16,19 @@ from opentelemetry.sdk.trace.export import (BatchSpanProcessor,
 from payments.models import Order
 from payments.config import Config
 
+import random
+import time
+
+
+def raise_error_or_delay():
+    probs = random.random()
+    if probs < 0.1:
+        raise Exception("Webshop Error")
+    elif probs < 0.2:
+        sleep_seconds = random.randint(0, 3)
+        time.sleep(sleep_seconds)
+
+
 load_dotenv()
 
 app = FastAPI()
@@ -58,9 +71,8 @@ async def get():
 
 @app.post("/payments")
 async def create_order(order: Order):
+    raise_error_or_delay()
     order_to_place = order.json()
-    print(order_to_place)
-    print(Config.shipping_endpoint + "shipments")
     placed_order = requests.post(
         Config.shipping_endpoint + "shipments", data=order_to_place).json()
     return placed_order
