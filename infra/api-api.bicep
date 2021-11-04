@@ -90,15 +90,14 @@ resource webshop_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
 }
 
 
-// resource webshopDiagnostics 'Microsoft.ApiManagement/service/apis/diagnostics@2021-04-01-preview' = {
-//   name: '${webshopAPI.name}/diagnostics'
-//   properties: {
-//     loggerId: apilogger.id
-//     logClientIp: true
-//     httpCorrelationProtocol: 'W3C'
-//   }
-
-// }
+resource webshopDiagnostics 'Microsoft.ApiManagement/service/apis/diagnostics@2021-04-01-preview' = {
+  name: '${webshopAPI.name}/applicationinsights'
+  properties: {
+    loggerId: apilogger.id
+    logClientIp: true
+    httpCorrelationProtocol: 'W3C'
+  }
+}
 
 resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
   name: '${apimgmt.name}/GraphQLAPI'
