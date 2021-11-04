@@ -39,7 +39,7 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name blobtracingsruinard --auth-mode key -d '$web' -s ./templates
+            az storage blob upload-batch --account-name blobtracingsruinard --auth-mode key -d '$web' -s ./apps/distributed_tracing/webshop/templates
 
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
