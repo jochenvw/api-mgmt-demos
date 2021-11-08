@@ -6,14 +6,14 @@ on:
       - main
 
 env:
-  AZURE_NODE_WEBAPP_NAME: api-app-api-node-REST-sruinard
+  AZURE_NODE_WEBAPP_NAME: api-app-api-node-REST-jvw-demo
   AZURE_NODE_WEBAPP_PACKAGE_PATH: './apps/nodeAPI'    
   NODE_VERSION: '14.x'
 
-  AZURE_PYTHON_WEBAPP_NAME: api-app-api-python-graph-sruinard    
+  AZURE_PYTHON_WEBAPP_NAME: api-app-api-python-graph-jvw-demo    
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH: './apps/pythonAPI'
   
-  AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-sruinard    
+  AZURE_PYTHON_WEBAPP_NAME_REST: api-app-api-python-jvw-demo    
   AZURE_PYTHON_WEBAPP_ROOT: './apps/pythonAPIREST/'
   AZURE_PYTHON_WEBAPP_PACKAGE_PATH_REST: './apps/pythonAPIREST/dist/'
 jobs:

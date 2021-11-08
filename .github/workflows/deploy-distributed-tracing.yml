@@ -7,9 +7,9 @@ on:
   #     - main
 
 env:
-  AZURE_PYTHON_WEBAPP_WEBSHOP: api-app-api-python-sruinard-webshop  
-  AZURE_PYTHON_WEBAPP_PAYMENTS: api-app-api-python-sruinard-payments
-  AZURE_PYTHON_WEBAPP_SHIPPING: api-app-api-python-sruinard-shipping 
+  AZURE_PYTHON_WEBAPP_WEBSHOP: api-app-api-python-jvw-demo-webshop  
+  AZURE_PYTHON_WEBAPP_PAYMENTS: api-app-api-python-jvw-demo-payments
+  AZURE_PYTHON_WEBAPP_SHIPPING: api-app-api-python-jvw-demo-shipping 
 
   WEBSHOP_ROOT: './apps/distributed_tracing/webshop'
   PAYMENTS_ROOT: './apps/distributed_tracing/payments'

@@ -235,7 +235,7 @@ resource miRoleAssign 'Microsoft.Authorization/roleAssignments@2020-04-01-previe
 
 
 resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
-  name: 'blobtracing${uniqueness}'
+  name: 'blobtracing${uniqueString(resourceGroup().id)}'
   location: location
   sku: {
     name: 'Standard_LRS'
