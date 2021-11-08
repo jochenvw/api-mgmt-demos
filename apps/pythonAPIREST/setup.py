@@ -14,7 +14,7 @@ setup(
     #can list down each package names - no need to keep __init__.py under packages / directories
 #     packages=['<list of name of packages>'], #importing is like: from package1 import mod2, or import package1.mod2 as m2
     install_requires=[
-    'fastapi==0.63.0',
+    'fastapi==0.65.2',
     "gunicorn==20.0.4",
     "h11==0.12.0",
     "pydantic==1.6.2",
