@@ -21,7 +21,7 @@ setup(
         "starlette==0.13.6",
         "uvicorn==0.13.4",
         "uvloop==0.16.0",
-        "websockets==8.1",
+        "websockets==9.1",
         "httptools==0.1.2",
         "python-dotenv==0.19.1",
         "azure-cosmos==4.2.0",
