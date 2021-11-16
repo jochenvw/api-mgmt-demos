@@ -21,7 +21,7 @@ setup(
     "starlette==0.13.6",
     "uvicorn==0.13.4",
     "uvloop==0.16.0",
-    "websockets==8.1",
+    "websockets==9.1",
     "httptools==0.1.2",
     ],
     #this approach automatically finds out all directories (packages) - those must contain a file named __init__.py (can be empty)
