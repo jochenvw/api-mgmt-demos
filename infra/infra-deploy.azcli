@@ -12,6 +12,8 @@ az group create --name api-mgmt-demos-apiteam --location westeurope
 az deployment group create --resource-group api-mgmt-demos-appteam --template-file './infra/api-apps.bicep' --parameters uniqueness=jvw-demo --mode Complete
 az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-mgmt.bicep' --parameters uniqueness=jvw-demo --mode Complete
 
+az storage blob service-properties update --account-name  --static-website --404-document error.htm --index-document index.htm
+
 # This deploys the API from the 'App team' into the resource group of the 'API team' - so differs
 # a bit in the sense that a team typically deploys resources in their own resource groups.
-az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep' --parameters uniqueness=jvw-demo 
+az deployment group create --resource-group api-mgmt-demos-apiteam --template-file './infra/api-api.bicep' --parameters uniqueness=jvw-demo
