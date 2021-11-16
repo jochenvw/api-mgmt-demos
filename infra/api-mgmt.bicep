@@ -28,3 +28,18 @@ resource appinsights 'Microsoft.Insights/components@2020-02-02' = {
     WorkspaceResourceId: workspace.id
   }
 }
+
+resource portalstorage 'Microsoft.Storage/storageAccounts@2021-06-01' = {
+  name: 'apimgmtportal${replace(uniqueness,'-','')}'
+  location: resourceGroup().location
+  kind: 'BlockBlobStorage'
+  sku: {
+    name: 'Premium_LRS'
+  }
+  properties: {
+    accessTier: 'Cool'
+    supportsHttpsTrafficOnly: true      
+    minimumTlsVersion: 'TLS1_2'
+ 
+ }
+}
