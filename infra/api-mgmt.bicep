@@ -4,13 +4,12 @@ resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' = {
   name: 'api-mgmt-team-apim-${uniqueness}'
   location: 'westeurope'
   sku: {
-    name: 'Consumption'
-    capacity: 0
+    name: 'Developer'
+    capacity: 1
   }
   properties: {
     publisherEmail: 'johndoe@microsoft.com'
     publisherName: 'John Doe'
-    restore: true
   }
 }
 

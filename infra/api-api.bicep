@@ -1,8 +1,10 @@
 // multiline string doesnt support interpolation
-var graphql_api_name = 'api-app-sruinard-graphql'
-var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-generated-policy" backend-id="WebApp_${graphql_api_name}" /> <base /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies> '
-
 param uniqueness string = 'z9pqqf'
+
+var backend_policy_value = ' <policies> <inbound> <set-backend-service id="apim-generated-policy" backend-id="WebApp_api-app-api-python-graph-${uniqueness}" /> <base /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies> '
+var webshopPolicy = '<policies> <inbound> <base /> <cors> <allowed-origins> <origin>*</origin> </allowed-origins> <allowed-methods preflight-result-max-age="300"> <method>GET</method> <method>POST</method> </allowed-methods> <allowed-headers> <header>*</header> </allowed-headers> <expose-headers> <header>*</header> </expose-headers> </cors> <set-backend-service base-url="https://api-app-api-python-${uniqueness}-webshop.azurewebsites.net" /> </inbound> <backend> <base /> </backend> <outbound> <base /> </outbound> <on-error> <base /> </on-error> </policies>'
+
+
 
 resource apimgmt 'Microsoft.ApiManagement/service@2021-01-01-preview' existing = {
   name: 'api-mgmt-team-apim-${uniqueness}'
@@ -66,6 +68,36 @@ resource api2 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
 }
 
 
+resource webshopAPI 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
+  name: '${apimgmt.name}/webshop'
+  properties: {
+    displayName: 'webshop'
+    apiType: 'http'
+    description: 'webshop api'
+    isCurrent: true
+    format: 'openapi-link'
+    value: 'https://api-app-api-python-${uniqueness}-webshop.azurewebsites.net/openapi.json'
+    path: 'webshop'
+    subscriptionRequired: false 
+  }
+}
+
+resource webshop_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-01-preview' = {
+  name: '${webshopAPI.name}/policy'
+  properties: {
+    value: webshopPolicy
+  }
+}
+
+
+resource webshopDiagnostics 'Microsoft.ApiManagement/service/apis/diagnostics@2021-04-01-preview' = {
+  name: '${webshopAPI.name}/applicationinsights'
+  properties: {
+    loggerId: apilogger.id
+    logClientIp: true
+    httpCorrelationProtocol: 'W3C'
+  }
+}
 
 resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
   name: '${apimgmt.name}/GraphQLAPI'
@@ -78,10 +110,11 @@ resource graphqlapi 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = 
       'https'
     ]
     displayName: 'graphQLAPI'
-    serviceUrl: 'https://api-mgmt-demos-apimgmt-${appsuffix}.azure-api.net/'
+    serviceUrl: apimgmt.properties.gatewayUrl
     subscriptionRequired: false 
   }
 }
+
 
 resource operations_get 'Microsoft.ApiManagement/service/apis/operations@2019-01-01' = {
   name: '${graphqlapi.name}/graphqloperations_get'
@@ -111,9 +144,10 @@ resource backend_policy 'Microsoft.ApiManagement/service/apis/policies@2021-01-0
     value: backend_policy_value
   }
 }
-resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
-  name: '${api1.name}/diagsetting'
-  properties: {
-    loggerId: apilogger.id
-  }
-}
+
+// resource diagnosticsetting 'Microsoft.ApiManagement/service/apis/diagnostics@2021-01-01-preview' = {
+//   name: '${api1.name}/diagsetting'
+//   properties: {
+//     loggerId: apilogger.id
+//   }
+// }
