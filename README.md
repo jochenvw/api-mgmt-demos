@@ -5,7 +5,7 @@ The objective of this repository is to serve as a practical guide on using API M
 Although the main goal is API-management, we combine it with other tools to give a holistic experience of the Microsoft Platform (i.e. integrate with Github, Bicep Deployments, Monitoring, etc.)
 
 ## To get Started:
-In order to use this repository, the following files need to be modified.
+In order to use this repository, the following files need to be modified. So you probably want to fork or clone the repo.
 
 #### Modify infra/*.bicep files:
 * api-api.bicep: 
