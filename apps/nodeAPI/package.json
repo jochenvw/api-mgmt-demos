@@ -39,7 +39,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.0",
-    "mocha": "^8.4.0",
+    "mocha": "^10.1.0",
     "nodemon": "^2.0.7",
     "pino-pretty": "^5.0.1",
     "supertest": "^6.1.3"
